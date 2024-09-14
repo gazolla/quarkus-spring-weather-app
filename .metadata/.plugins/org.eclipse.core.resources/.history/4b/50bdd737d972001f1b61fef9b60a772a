@@ -1,0 +1,53 @@
+package com.gazapps.weatherbylocation.model;
+
+public class WeatherResponse {
+    public LocationInfo location;
+    public WeatherInfo weather;
+
+    public WeatherResponse(ResponseGeoLocation geoLocation, ResponseWeather weather) {
+        this.location = new LocationInfo(geoLocation);
+        this.weather = new WeatherInfo(weather);
+    }
+
+    public static class LocationInfo {
+        public String name;
+        public String region;
+        public String country;
+        public double latitude;
+        public double longitude;
+
+        public LocationInfo(ResponseGeoLocation geoLocation) {
+            if (!geoLocation.features().isEmpty()) {
+                var feature = geoLocation.features().get(0);
+                this.name = feature.text();
+                this.region = feature.context().get(0).text();
+                this.country = feature.context().get(1).text();
+                this.latitude = geoLocation.getLatitude();
+                this.longitude = geoLocation.getLongitude();
+            }
+        }
+    }
+
+    public static class WeatherInfo {
+        public int temperature;
+        public String description;
+        public int feelsLike;
+        public int windSpeed;
+        public int pressure;
+        public int humidity;
+        public int uvIndex;
+        public int visibility;
+
+        public WeatherInfo(ResponseWeather weather) {
+            var current = weather.current();
+            this.temperature = current.temperature();
+            this.description = String.join(", ", current.weatherDescriptions());
+            this.feelsLike = current.feelslike();
+            this.windSpeed = current.windSpeed();
+            this.pressure = current.pressure();
+            this.humidity = current.humidity();
+            this.uvIndex = current.uvIndex();
+            this.visibility = current.visibility();
+        }
+    }
+}

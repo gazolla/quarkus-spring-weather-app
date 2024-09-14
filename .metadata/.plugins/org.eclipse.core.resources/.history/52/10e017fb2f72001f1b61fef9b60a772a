@@ -1,0 +1,31 @@
+package com.gazapps.weatherclient.model;
+
+public class WeatherResponse {
+    private LocationInfo location;
+    private WeatherInfo weather;
+
+    // Getters and setters
+
+    public static class LocationInfo {
+        private String name;
+        private String region;
+        private String country;
+        private double latitude;
+        private double longitude;
+
+        // Getters and setters
+    }
+
+    public static class WeatherInfo {
+        private int temperature;
+        private String description;
+        private int feelsLike;
+        private int windSpeed;
+        private int pressure;
+        private int humidity;
+        private int uvIndex;
+        private int visibility;
+
+        // Getters and setters
+    }
+}
